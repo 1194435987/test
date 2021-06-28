@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+    <title>练习网页 - 欢迎页</title>
+    <!---这是个练习网页 作用是来练习javascript的各种功能 函数等 网页的结构为 标题 主导航（有什么作用吗 后期拓展？） 侧边导航（实例关键词/函数名称）
+         搜素框（各个函数的关键词 实现的效果） 内容框 （ 一半为代码显示区域 一半为代码实现区）  每个实例一个子页面-->
+
+
+         
+   
+<!-- 设置cookies 和读取cookies  setCookie() getCookie()-->
+<script src="cookies.js"></script>
+<style>
+
+   :root{
+      --main-word :rgb(248,248,232);
+      --main-element:rgb(10,120,200);
+      --main-background:rgb(157, 210, 248);
+
+   }
+   
+ body{background-color:var(--main-background) ;transition-duration: .3s;}
+ #center{width: 97%;display: flex;height: 85vh;justify-content: center;align-items:center ;}
+ h1{
+    color: var(--main-word);
+    padding: 40px;
+    background-color:var(--main-element);
+    border-style: 0px solid;border-radius: 100px;
+    cursor: pointer;
+    transition-duration: .4s;
+    box-shadow: 0px 0px 10px 0px var(--main-element);
+ }
+ h1:active{background-color: var(--main-background);
+ box-shadow: 0px 0px 10px 100vw var(--main-background);
+ }
+ h1 p{position: relative;
+ font-size: 15px; 
+ text-align: center;
+ margin: 5px 0px -25px 0px;
+ opacity: 0;
+ transition-duration: 0.8s;
+ color: var(--main-word)
+ }
+ h1:hover p {opacity: 1;transform: translateX(80px);}
+
+ ul{
+    position: absolute;top: 2%;
+    list-style-type: none;
+ margin-top: 30px;margin-left: 2%;
+ padding: 0;
+
+ }
+ li{display: block;padding: 10px;margin: 10px;
+ float: left;
+ background-color: rgb(10,120,200);
+ width: 40px;
+ height: 40px;
+ border: 3px solid var(--main-word);
+ border-radius: 10px;
+ color:var(--main-word);
+ cursor: pointer;
+ text-align: center;font-size: 30px;
+ padding :0px;
+ transition-duration: 1s;
+ }
+
+ ul li:hover:not(.li1){transition-duration: .8s;width: 50px;height: 50px;}
+ .li1{opacity: 0.7;cursor:default;border: 0px;}
+ a{text-decoration: none;color: var(--main-word);}
+.words{color: var(--main-word);font-size: 20px;}
+
+</style>
+</head>
+<body onload="checkSkinsCookies('skins')">
+   <div id='center'><a  href="说明页.html"  ><h1 id=h  >这是我的练习网站 <br/> <p>点击查看 >></p></h1></a></div>
+   <div>
+      <ul>
+         <div class="words" style="display:bolck;float: left;font-size: 35px;margin-top: 5px;color:var(--main-element);">主题:</div>
+         <li class='li1' onclick="skinchange(1);setCookie('skins',1,7)" >√</li>
+         <li class="li0" onclick="skinchange(2);setCookie('skins',2,7)" style="background-color: lawngreen;">  </li>
+         <li class="li0" onclick="skinchange(3);setCookie('skins',3,7)" style="background-color:khaki;">  </li>
+      
+      </ul>
+   </div>
+  
+</body>
+<script>
+   'use strict'
+   /* 标准颜色 */
+   var colors = {
+     Bblue:'rgb(157, 210, 248)',
+     Bgreen : 'rgb(204,252,204)',
+     Byellow: 'rgb(235,230,210)',
+     blue:'rgb(10,120,200)',
+     green : 'rgb(114,202,0)',
+     yellow: 'rgb(200,200,100)',
+   };
+   var x=0;
+   var liN=[[1,360],[2,360],[3,360]];/*皮肤序列*/
+
+
+   function checkSkinsCookies(name)
+   {
+      
+      var v = getCookie(name);
+      skinchange(v);
+   }
+
+
+
+function skinchange(s){
+var bodyBG=document.getElementsByTagName('body')[0].style;
+var hBG=document.getElementById('h').style;
+
+var licheck=function(s){
+
+   if(s===x)return;
+   liN.map(function(value,index){
+      var arr=value;
+      var liS=document.getElementsByTagName('li')[index].style;
+      if(s===arr[0]){liS.transitionDuration='1s';
+       liS.transform='rotateX('+arr[1]+'deg)';/* 变量加单位写法 */
+       setTimeout( function(){document.getElementsByTagName('li')[index].innerHTML='√' }, 400);
+       x=s;
+       if(arr[1]===360){arr[1]=0;}
+       else{arr[1]=360}
+       document.getElementsByTagName('li')[index].className='li1';
+}
+   else {document.getElementsByTagName('li')[index].innerHTML='';document.getElementsByTagName('li')[index].className='li0';}
+});
+}
+/* 改变css变量 来换皮肤 */
+   switch(s){
+      case 1: document.body.style.setProperty('--main-background',colors.Bblue);
+      document.body.style.setProperty('--main-element',colors.blue);licheck(s); break;
+      case 2: document.body.style.setProperty('--main-background',colors.Bgreen);
+      document.body.style.setProperty('--main-element',colors.green);licheck(s); break;
+      case 3: document.body.style.setProperty('--main-background',colors.Byellow);
+      document.body.style.setProperty('--main-element',colors.yellow);licheck(s); break;
+   }}
+
+</script>
+</html>
